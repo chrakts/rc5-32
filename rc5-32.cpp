@@ -86,6 +86,7 @@ uint16_t zeit;
 				RC5_TIMER.CTRLA = TC_CLKSEL_DIV256_gc;		// clocked at CK/256, 16Mhz Quarz
 				RC5_TIMER.CNT = 1;
 				status = 3;				// Taste gedückt gehalten, Startsequenz fehlt
+				Taste_Neu = false;
 				rising_edge();
 				bitcount = 1;			// erstes Byte wurde übersprungen
 			}
