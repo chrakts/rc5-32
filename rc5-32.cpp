@@ -8,7 +8,7 @@ extern volatile uint8_t IR_Remote,Taste_Neu;
 // Signal an Interrupt 1
 
 static unsigned char status=0,bitcount=0;
-static unsigned char  data=0,data1,data2,Taste,Taste_alt;
+static unsigned char  data=0,data1,data2,Taste_alt;
 
 ISR ( RC5_INTVEC )     /* signal handler for external interrupt int1 */
 {
@@ -25,10 +25,7 @@ uint16_t zeit;
 			if( zeit<ZEIT_BIT_LANG )
       {
 				data = data | 0x80;
-        PORTE.OUTSET = 1;
       }
-      else
-        PORTE.OUTCLR = 1;;
 			bitcount = bitcount + 1;
 
 			switch(bitcount)
@@ -46,7 +43,6 @@ uint16_t zeit;
 					if( data2 == Taste_alt )
 					{
 						IR_Remote=data2;
-//						PORTC = ~data2;
 					}
 					Taste_alt = data2;
 				}
@@ -62,7 +58,6 @@ uint16_t zeit;
 			bitcount=0;
 			if( zeit>ZEIT_START_HIGH )		//
 			{
-        PORTE.OUTCLR = 1;
 				RC5_TIMER.CTRLA = TC_CLKSEL_DIV256_gc;		// clocked at CK/256, 16Mhz Quarz
 				RC5_TIMER.CNT = 1;
 				status=3;			// neue Taste gedrückt
@@ -74,7 +69,6 @@ uint16_t zeit;
 		break;
 		case 1:
 			zeit = RC5_TIMER.CNT;
-		  PORTE.OUTSET = 1;
 			if( zeit>ZEIT_START_LOW )
 			{
 				RC5_TIMER.CNT = 1;
@@ -92,7 +86,6 @@ uint16_t zeit;
 			}
 		break;
 		case 0:
-		  PORTE.OUTCLR = 1;
 			RC5_TIMER.CTRLA = TC_CLKSEL_DIV256_gc;			// clocked at CK/1024, 16Mhz Quarz
 			RC5_TIMER.CNT = 1;
 			data = 0L;

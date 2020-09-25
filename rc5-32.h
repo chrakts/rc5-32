@@ -33,6 +33,8 @@
 #define T_DATE_MI	0b11000111
 #define T_TVPRG_PL	0b00011001   // identisch mit T_KANAL_P
 #define T_TVPRG_MI	0b00011000   // identisch mit T_KANAL_M
+#define T_PROG_MENU 55
+#define T_OK      60
 
 
 
